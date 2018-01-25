@@ -1,0 +1,15 @@
+<table class="table table-bordered">	
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성일</th>
+		</tr>
+	</thead>
+	<tr data-ng-repeat="rows in list">
+		<td>{{rows.NoticeNo}}</td>
+		<td><a href="#!/noticedetails/{{rows.NoticeNo}}">{{rows.NoticeName}}</a></td>
+		<td>{{rows.NoticeDate.year+1900}}-{{rows.NoticeDate.month+1}}-{{rows.NoticeDate.date}}</td>
+	</tr>
+</table>
+

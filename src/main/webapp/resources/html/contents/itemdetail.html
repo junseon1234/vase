@@ -1,0 +1,42 @@
+<script>
+		function showKeyCode(event) {
+			event = event || window.event;
+			var keyID = (event.which) ? event.which : event.keyCode;
+			if( ( keyID >=48 && keyID <= 57 ) || ( keyID >=96 && keyID <= 105 ) ) {
+				return;
+			} else {
+				return false;
+			}
+		}
+		
+		function countchk(event) {
+			if($("#itemcount").val() > 1000){
+				alert("1~999의 값을 입력하세요");
+				$("#itemcount").val(1);
+			}
+		}
+</script>
+
+<div class="itemdetail">
+	<div class="col-sm-8" align="center">
+		<img data-ng-src="resources/image/{{itemdata.ItemImgsrc}}.jpg">
+	</div>
+	<div class="col-sm-4">
+		<h3 class="itemname">{{itemdata.ItemName}}</h3>
+		<hr class="itemdetail-hr">
+		<p>가격 : {{itemdata.ItemPrice}}원</p>
+		<hr class="itemdetail-hr">
+		<p>배송비 결제 : 주문시 배송</p>
+		<hr class="itemdetail-hr">
+		<p>수량</p> <input type="text" id="itemcount" class="itemcount"	
+		onkeydown="return showKeyCode(event)" 
+		onkeyup="return countchk(event)" 
+		data-ng-model="itemcount">
+		<button type="button" data-ng-click="countup()">증가</button>
+		<button type="button" data-ng-click="countdown()">감소</button>
+		<hr class="itemdetail-hr">
+		<h3>총 금액 : {{itemdata.ItemPrice * itemcount}}원</h3>
+		<a data-ng-href="#!/order/{{itemdata.ItemNo}}?count={{itemcount}}"><button type="button" class="buybutton btn btn-primary col-sm-6"> 바로구매 </button></a>
+		<button type="button" class="buybutton btn btn-default col-sm-6" data-ng-click="basketin()"> 장바구니 </button>
+	</div>
+</div>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sql">
+	<select id="test" resultType="hashmap">
+		select '테스트' as data
+	</select>
+	
+	<select id="notice" resultType="hashmap">
+		select * from notice order by NoticeNo desc
+	</select>
+	
+	<select id="noticedetail" resultType="hashmap">
+		select * from notice where NoticeNo = #{id}
+	</select>
+	
+	<select id="item" resultType="hashmap">
+		select * from items where ItemType = #{ItemType}
+	</select>
+	
+	<select id="itemdetail" resultType="hashmap">
+		select * from items where ItemNo = #{id}
+	</select>
+	
+	<insert id="basketin" parameterType="hashmap">
+		insert into basket (BasketID, BasketItem, BasketCount) 
+		values (#{id}, #{item}, #{count})
+	</insert>
+	
+	<select id="basketsel" resultType="hashmap">
+		select * from basket where BasketID = #{id} and BasketItem = #{item} and Basket_delYN = 'N'
+	</select>
+	
+	<insert id="signin" parameterType="hashmap">
+		insert into profile (UserID, UserPW, UserName, UserBirthday, UserEmail, UserPhone, UserAddress1, UserAddress2) 
+		values (#{UserID}, #{UserPW}, #{UserName}, #{UserBirthday}, #{UserEmail}, #{UserPhone}, #{UserAddress1}, #{UserAddress2})
+	</insert>
+	
+	<select id="iddupe" resultType="hashmap">
+		select * from profile where UserID = #{id}
+	</select>
+	
+	<select id="buylist" resultType="hashmap">
+		select * from orderbuy where OrderID = #{id} and del_ny = 'N'
+	</select>
+	
+	<select id="buypw" resultType="hashmap">
+		select * from orderbuy where OrderPW = #{OrderPW} and del_ny = 'N' 
+	</select>
+	
+	<insert id="qa" parameterType="hashmap">
+		insert into qa (QAID, QAtitle, QAcontent) 
+		values (#{QAID}, #{QAtitle}, #{QAcontent})
+	</insert>
+	
+	<select id="login" resultType="hashmap">
+		select * from profile where UserID = #{id} and UserPW = #{pw}
+	</select>
+	
+	<select id="basketlist" resultType="hashmap">
+		select items.ItemImgsrc, items.ItemName, basket.BasketCount, items.ItemPrice, items.ItemNo
+		from basket 
+		inner join items
+		on basket.BasketItem = items.ItemName
+		where BasketID = #{id} and Basket_delYN = 'N'
+	</select>
+	
+	<update id="basketreset" parameterType="hashmap">
+		update basket set Basket_BuyYN='N' where BasketID = #{id} and Basket_delYN = 'N'
+	</update>
+	
+	<update id="basketbuy" parameterType="hashmap">
+		update basket set Basket_BuyYN='Y' where BasketID = #{id} and BasketItem = #{item}
+	</update>
+	
+	<update id="basketdel" parameterType="hashmap">
+		update basket set Basket_delYN='Y' where BasketID = #{id} and BasketItem = #{item}
+	</update>
+	
+	<select id="orderlist" resultType="hashmap">
+		select items.ItemImgsrc, items.ItemName, basket.BasketCount, items.ItemPrice, items.ItemNo
+		from basket 
+		inner join items
+		on basket.BasketItem = items.ItemName
+		where BasketID = #{id} and Basket_BuyYN = 'Y' and Basket_delYN = 'N'
+	</select>
+	
+	<insert id="orderbuy" parameterType="hashmap">
+		insert into orderbuy (OrderName, OrderID, OrderPW, OrderItem, OrderCount, OrderPhone, OrderAddr, TakerName, TakerPhone, TakerAddr, TakerMessage)  
+		values (#{OrderName}, #{OrderID}, #{OrderPW}, #{OrderItem}, #{OrderCount}, #{OrderPhone}, #{OrderAddr}, #{TakerName}, #{TakerPhone}, #{TakerAddr}, #{TakerMessage})
+	</insert>
+	
+	<update id="pointup" parameterType="hashmap">
+		update profile set UserPoint = UserPoint + #{Point} where UserID = #{id}
+	</update>
+</mapper>

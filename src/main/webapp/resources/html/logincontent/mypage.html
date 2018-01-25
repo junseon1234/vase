@@ -1,0 +1,31 @@
+<div class="content">
+	<p>계정 상태</p>
+	<p>아이디 : {{mypage.UserID}}</p>
+	<p>이름 : {{mypage.UserName}}</p>
+	<p>E-mail : {{mypage.UserEmail}}</p>
+	<p>전화번호 : {{mypage.UserPhone}}</p>
+	<p>현재 적립 포인트 : {{mypage.UserPoint}} Pt</p>
+	<p>주소 : {{mypage.UserAddress1}} {{mypage.UserAddress2}}</p>
+	<hr>
+	<h2>주문내역</h2>
+	<table class="table table-bordered table-basket">	
+	<thead>
+		<tr>
+			<th></th>
+			<th>상품명</th>
+			<th>수량</th>
+			<th>구매일시</th>
+			<th>배송상태</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr data-ng-repeat="rows in orders">
+		<td>{{$index+1}}</td>
+		<td>{{rows.OrderItem}}</td>
+		<td>{{rows.OrderCount}}</td>
+		<td>{{rows.OrderDate.year+1900}}-{{rows.OrderDate.month+1}}-{{rows.OrderDate.date}}</td>
+		<td>{{rows.OrderStatus}}</td>
+	</tr>
+	</tbody>
+</table>
+</div>

@@ -1,0 +1,61 @@
+<script>
+$(document).ready(function() {
+    $("#chkall").change(function() {
+        if (this.checked) {
+            $(".selchk").each(function() {
+                this.checked=true;
+            });
+        } else {
+            $(".selchk").each(function() {
+                this.checked=false;
+            });
+        }
+    });
+
+    $(".selchk").click(function () {
+        if ($(this).is(":checked")) {
+            var isAllChecked = 0;
+
+            $(".selchk").each(function() {
+                if (!this.checked)
+                    isAllChecked = 1;
+            });
+
+            if (isAllChecked == 0) {
+                $("#chkall").prop("checked", true);
+            }     
+        }
+        else {
+            $("#chkall").prop("checked", false);
+        }
+    });
+});
+
+</script>
+<table class="table table-bordered table-basket">	
+	<thead>
+		<tr>
+			<th><input type="checkbox" class="chkall" id="chkall"></th>
+			<th>상품이미지</th>
+			<th>상품명</th>
+			<th>수량</th>
+			<th>가격</th>
+			<th>소계</th>
+			<th>적립 포인트</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr data-ng-repeat="rows in basket">
+		<td><input type="checkbox" class="selchk" data-ng-click="selcheck()"></td>
+		<td><img data-ng-src="resources/image/{{rows.ItemImgsrc}}.jpg"></td>
+		<td><a data-ng-href="#!/itemdetails/{{rows.ItemNo}}">{{rows.ItemName}}</a></td>
+		<td>{{rows.BasketCount}}</td>
+		<td>{{rows.ItemPrice * rows.BasketCount}}원</td>
+		<td>{{rows.ItemPrice}}원</td>
+		<td>{{rows.ItemPrice * rows.BasketCount * 0.001 | number:0}} Pt</td>
+	</tr>
+	</tbody>
+</table>
+<h2>합계 : {{sum}}원</h2>
+<hr>
+<button data-ng-click="basketbuy()">구매</button> / <button data-ng-click="basketdel()">삭제</button>

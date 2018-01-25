@@ -1,0 +1,10 @@
+	<h2 class="itemtitle"></h2>
+	<hr>
+	<div class="col-sm-4 itemlist" data-ng-repeat="rows in items" align="center" style="height:250px">
+		<a data-ng-href="#!/itemdetails/{{rows.ItemNo}}">
+		<img data-ng-src="resources/image/{{rows.ItemImgsrc}}.jpg" alt="page1" style="width:60%;">
+		</a>
+		<p>{{rows.ItemName}}</p>
+		<div class="itemtag"><p>{{rows.ItemTag}}</p></div>
+		<p>{{rows.ItemPrice}} 원</p>
+	</div>

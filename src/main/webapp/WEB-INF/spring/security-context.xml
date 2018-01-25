@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- Security URL 주소 설정 -->
+	<security:http auto-config="true">
+		<security:csrf disabled="true"/>
+		<security:form-login
+			login-page="/login"
+			username-parameter="UserID"
+			password-parameter="UserPW"
+			login-processing-url="/security_check"
+			authentication-failure-url="/loginfailed"
+			default-target-url="/loginsuccess"
+		/>
+		<security:logout
+			logout-url="/security_logout"
+			logout-success-url="/"
+			delete-cookies="JSESSIONID"
+		/>
+		
+		<security:intercept-url
+			pattern="/resources/bootstrap-3.3.2-dist/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/js/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/css/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/angular/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/views/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/image/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/html/base/**" access="true"/>
+		<security:intercept-url
+			pattern="/resources/html/contents/**" access="true"/>
+		<security:intercept-url
+			pattern="/" access="true"/>
+		<security:intercept-url
+			pattern="/index" access="true"/>
+		<security:intercept-url
+			pattern="/login" access="true"/>
+		<security:intercept-url
+			pattern="/loginCheck" access="true"/>
+		<security:intercept-url
+			pattern="/loginfailed" access="true"/>
+		<security:intercept-url
+			pattern="/loginsuccess" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url
+			pattern="/signin" access="true"/>
+		<security:intercept-url
+			pattern="/notice" access="true"/>
+		<security:intercept-url
+			pattern="/iddupe" access="true"/>
+		<security:intercept-url
+			pattern="/noticedetail" access="true"/>
+		<security:intercept-url
+			pattern="/item" access="true"/>
+		<security:intercept-url
+			pattern="/itemdetail" access="true"/>
+		<security:intercept-url
+			pattern="/qain" access="true"/>
+		<security:intercept-url
+			pattern="/order" access="true"/>
+		<security:intercept-url
+			pattern="/orderbuy" access="true"/>
+		<security:intercept-url
+			pattern="/ordersearch" access="true"/>
+		<security:intercept-url
+			pattern="/ordersearching" access="true"/>
+		<security:intercept-url
+			pattern="/**" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url
+			pattern="/searchsuccess" access="true"/>
+		<security:intercept-url
+			pattern="/searchfailed" access="true"/>
+	</security:http>
+	
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service 
+				data-source-ref="dataSource"
+				users-by-username-query="select UserID as `username`, UserPW as `password`,`enabled` from profile where UserID = ?;"
+				authorities-by-username-query="select no, authority from profile where UserID = ?;"
+			/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
